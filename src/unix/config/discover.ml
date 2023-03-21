@@ -396,11 +396,11 @@ struct
     detect = fun context ->
       let detect_esy_wants_libev () =
         match Sys.getenv "cur__target_dir" with
-        | exception Not_found -> None
+        | exception Not_found -> failwith "cur__target_dir not set"
         | _ ->
           match Sys.getenv "LIBEV_CFLAGS", Sys.getenv "LIBEV_LIBS" with
-          | exception Not_found -> Some false
-          | "", "" -> Some false
+          | exception Not_found -> failwith "NOT FOUND"
+          | "", "" -> failwith "EMPTY"
           | _ -> Some true
       in
 
