@@ -401,13 +401,13 @@ struct
           match Sys.getenv "LIBEV_CFLAGS", Sys.getenv "LIBEV_LIBS" with
           | exception Not_found -> failwith "NOT FOUND"
           | "", "" -> failwith "EMPTY"
-          | _ -> Some true
+          | _ -> failwith "fuck me"
       in
 
       let should_look_for_libev =
         match !Arguments.use_libev with
-        | Some argument ->
-          argument
+        | Some true -> true
+        | Some false -> failwith "FUCKING ARGUMENT"
         | None ->
           match detect_esy_wants_libev () with
           | Some result ->
@@ -419,7 +419,7 @@ struct
       in
 
       if not should_look_for_libev then
-        None
+        failwith "SHOULD NOT LOOK"
       else begin
         let code = {|
           #include <ev.h>
@@ -437,7 +437,10 @@ struct
           Some true
         | _ ->
           C_library_flags.detect context ~library:"ev";
-          compiles context code
+          match compiles context code with
+          | Some true -> failwith "FUCKING HELL IT'S TRUE"
+          | Some false -> failwith "END FALSE"
+          | None -> failwith "END NONE"
       end
   }
 

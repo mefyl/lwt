@@ -8,8 +8,6 @@
 #include "lwt_config.h"
 #include "lwt_unix.h"
 
-#if defined(HAVE_LIBEV)
-
 #include <assert.h>
 
 #include <caml/alloc.h>
@@ -237,17 +235,3 @@ CAMLprim value lwt_libev_timer_stop(value loop, value val_watcher) {
   free(watcher);
   CAMLreturn(Val_unit);
 }
-
-#else
-
-LWT_NOT_AVAILABLE1(libev_init)
-LWT_NOT_AVAILABLE1(libev_stop)
-LWT_NOT_AVAILABLE2(libev_loop)
-LWT_NOT_AVAILABLE1(libev_unloop)
-LWT_NOT_AVAILABLE3(libev_readable_init)
-LWT_NOT_AVAILABLE3(libev_writable_init)
-LWT_NOT_AVAILABLE2(libev_io_stop)
-LWT_NOT_AVAILABLE4(libev_timer_init)
-LWT_NOT_AVAILABLE2(libev_timer_stop)
-
-#endif
