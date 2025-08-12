@@ -187,7 +187,7 @@ class libev ?(backend=Ev_backend.default) () = object
       ev_loop loop block
     with exn ->
       ev_unloop loop;
-      raise exn
+      Stdlib.raise_notrace exn
 
   method private register_readable fd f =
     let ev = ev_readable_init loop fd f in
