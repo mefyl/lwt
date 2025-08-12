@@ -186,6 +186,8 @@ class libev ?(backend=Ev_backend.default) () = object
     try
       ev_loop loop block
     with exn ->
+      prerr_endline ("exception killing libev main loop: " ^ Printexc.to_string exn);
+      Printexc.print_backtrace stderr;
       ev_unloop loop;
       Stdlib.raise_notrace exn
 
